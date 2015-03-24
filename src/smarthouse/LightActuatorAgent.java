@@ -5,18 +5,17 @@
  */
 package smarthouse;
 
+import jade.core.Agent;
 /**
  *
  * @author Francisco Manuel Castro Payán
  * @author Adolfo Núñez Fernández 
  */
-public class Smarthouse {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+public class LightActuatorAgent extends Agent{
+   protected void setup() {
+  	System.out.println("I am a "+getLocalName());
+  	
+  	// Make this agent terminate
+  	doDelete();
+  } 
 }
