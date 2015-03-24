@@ -6,6 +6,7 @@
 package smarthouse;
 
 import jade.core.Agent;
+
 /**
  *
  * @author Francisco Manuel Castro Payán
@@ -13,7 +14,7 @@ import jade.core.Agent;
  */
 public class FireSensorAgent extends Agent{
    protected void setup() {
-  	System.out.println("I am a "+getLocalName());
+  	System.out.println("I am a "+getAID().getName());
   	
   	// Make this agent terminate
   	doDelete();
