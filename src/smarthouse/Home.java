@@ -6,7 +6,7 @@
 package smarthouse;
 
 /**
- * This class represents the environment
+ * This class represents the environment. Implements the Singleton design pattern 
  * 
  * @author Francisco Manuel Castro Payán
  * @author Adolfo Núñez Fernández 
@@ -14,7 +14,11 @@ package smarthouse;
 public class Home {
     private static Home instance = null;
     private double hTemperature = 17.0; // Home temperature
-    private double confortTemperature = 20.0; // Home temperature
+    private double confortTemperature = 20.0; // Confort temperature
+    private int hBrightness = 80; // Home brightness
+    private boolean hFireAlarm = false; // Fire alarm
+    private boolean hAntiTheft = false; // anti-theft system
+    
     protected Home() {
       // Exists only to defeat instantiation.
     }
