@@ -6,16 +6,28 @@
 package smarthouse;
 
 import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
 /**
  *
  * @author Francisco Manuel Castro Payán
  * @author Adolfo Núñez Fernández 
  */
 public class TemperatureActuatorAgent extends Agent{
-   protected void setup() {
-  	System.out.println("I am a "+getLocalName());
-  	
-  	// Make this agent terminate
-  	doDelete();
-  } 
+    Double velocity = 0.25;
+    protected void setup(){
+    
+        System.out.println("Agent "+getLocalName()+" started.");
+        addBehaviour(new CyclicBehaviour(this){
+            public void action(){
+                ACLMessage msg= receive();
+                if (msg!=null){
+                    System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                    System.out.println( "Setting temperature: " +Math.round(Double.valueOf(msg.getContent())));
+                    Home.getInstance().setTemperature(Math.round(Double.valueOf(msg.getContent())));
+                }
+                block();
+            }
+        });
+    }  
 }
