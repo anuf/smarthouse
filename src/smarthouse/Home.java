@@ -15,7 +15,9 @@ public class Home {
     private static Home instance = null;
     private double hTemperature = 17.0; // Home temperature
     private double confortTemperature = 20.0; // Confort temperature
-    private int hBrightness = 80; // Home brightness
+    private int hBrightness = 60; // Home brightness
+    private int confortBrightness = 40; // Confort Brightness
+    private boolean hLightsAreOn = false;
     private boolean hFireAlarm = false; // Fire alarm
     private boolean hAntiTheft = false; // anti-theft system
     private boolean hDoorOpen = true; // Door state
@@ -74,4 +76,29 @@ public class Home {
     public void setHomeEmpty(boolean pEmpty){
         hHomeEmpty = pEmpty;
     }
+    
+    public int getBrightness(){
+        return hBrightness;
+    }
+    
+    public void setBrightness(int pBrightness){
+        hBrightness = pBrightness;
+    }
+    
+    public int getConfortBrightness(){
+        return confortBrightness;
+    }
+    
+    public void setConfortBrightness(int pConfBrightness){
+        confortBrightness = pConfBrightness;
+    }
+    
+    public void setLightsOn(boolean pLights){
+        hLightsAreOn = pLights;
+    }
+    
+    public boolean getLightsOn(){
+        return hLightsAreOn;
+    }
+    
 }

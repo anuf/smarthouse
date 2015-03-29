@@ -8,6 +8,7 @@ package smarthouse;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.core.AID;
+import jade.lang.acl.ACLMessage;
 import java.util.Random;
 /**
  *
@@ -16,48 +17,40 @@ import java.util.Random;
  */
 public class LightSensorAgent extends Agent{
     protected void setup() {
-        //AID id = new AID();
-        //id.setLocalName("LightSensor");
-        System.out.println("Agent "+getLocalName()+" started.");
-  	//System.out.println("I am a "+id.getLocalName());
-  	
-        //addBehaviour(new MyBehaviour(this));
         
-        // Add the TickerBehaviour (period 1 sec)
-        addBehaviour(new TickerBehaviour(this, 1000) {
-            Random rand = new Random();
-            Boolean lightOn = false;
-            protected void onTick() {
-                //System.out.println("Agent "+myAgent.getLocalName()+": tick="+getTickCount());
-                int randomInt = rand.nextInt(100);
-                if (randomInt<10){
-                    lightOn = !lightOn;
-                }
-                System.out.println("Light is: "+ (lightOn ? "ON": "OFF"));
-          } 
-        });
+        System.out.println("Agent "+getLocalName()+" started.");
+  	addBehaviour(new MyBehaviour(this, 5000));
+
     
   	// Make this agent terminate
   	//doDelete();
     }
     
-    class MyBehaviour extends SimpleBehaviour{
+    /**
+     * Behaviour that generates random values slighly different from actual Home temperature as sensed temperatura
+     */
+    class MyBehaviour extends TickerBehaviour{
         private boolean finished = false;
-        public MyBehaviour(Agent a){
-            super(a);
+        private int brightness;
+        private int rangeBrightnes = 10;
+        public MyBehaviour(Agent a, int t){
+            super(a,t);
         }
-        public void action(){
-        // Generar encendidos y apagados de luz cada cierto intervalo de tiempo aleatorio
-        // Comportamiento cíclico que envíe cada segundo una señal a
-            
-            for (int idx = 1; idx <= 10; ++idx){
+        protected void onTick() {           
+            brightness = randomInRange(Home.getInstance().getBrightness()-rangeBrightnes, Home.getInstance().getBrightness()+rangeBrightnes);
                 
-            }
-            finished = true;
-        }
-        
-        public boolean done(){
-            return finished;
+            // Message to controller
+            ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
+            msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+            msg.setContent(Integer.toString(brightness));
+            myAgent.send(msg);
         }
     }
+    /**
+     * Generates a random int value between min and max 
+     */
+    private int randomInRange(int min, int max){
+        int range = (max - min) + 1;     
+        return (int) (Math.round(Math.random() * range) + min);
+    }    
 }

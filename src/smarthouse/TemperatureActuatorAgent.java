@@ -14,7 +14,7 @@ import jade.lang.acl.ACLMessage;
  * @author Adolfo Núñez Fernández 
  */
 public class TemperatureActuatorAgent extends Agent{
-    Double velocity = 0.25;
+    
     protected void setup(){
     
         System.out.println("Agent "+getLocalName()+" started.");

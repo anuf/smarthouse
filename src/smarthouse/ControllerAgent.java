@@ -44,7 +44,36 @@ public class ControllerAgent extends Agent{
                         }
 
                     }else if(msg.getSender().getLocalName().equals("sensorLuz")){
-                        // TODO
+                        System.out.println( " * " +myAgent.getLocalName() + 
+                                " <- message received from: " +msg.getSender().getLocalName() +
+                                ". Current brightness: " + msg.getContent());
+                        
+                        // Check brightness and decide.
+                        int brightness = Integer.valueOf(msg.getContent());
+                        int cBrightness = Home.getInstance().getConfortBrightness();
+                        boolean lightsOn = Home.getInstance().getLightsOn();
+                        String textLights = "";
+                        if (brightness > cBrightness && lightsOn) {
+                            // Message to actorLuz
+                            ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+                            msg2.addReceiver(new AID("actorLuz",AID.ISLOCALNAME));
+                            msg2.setContent("TURN OFF");
+                            myAgent.send(msg2);
+                        }else if(brightness < cBrightness && !lightsOn){
+                            // Message to actorLuz
+                            ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+                            msg2.addReceiver(new AID("actorLuz",AID.ISLOCALNAME));
+                            msg2.setContent("TURN ON");
+                            myAgent.send(msg2);
+                        }else{
+                            textLights = "LIGHTS ARE OK";
+                        }
+                        
+                        if(!textLights.equals("")){
+                            System.out.println(" MSG: " +textLights);
+                        }
+                        
+                        
                     }else{
                         // Messages have gone directly to actuators so they resend a notification 
                         System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
