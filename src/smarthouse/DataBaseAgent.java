@@ -33,7 +33,7 @@ public class DataBaseAgent extends Agent {
     private FileWriter fireFile;
 
     protected void setup() {
-        System.out.println("I am a " + getLocalName());
+        System.out.println("Agent "+getLocalName()+" started.");
         addBehaviour(new CyclicBehaviour(this) {
             public void action() {
                 ACLMessage msg = receive();

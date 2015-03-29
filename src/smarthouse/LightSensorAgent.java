@@ -32,13 +32,13 @@ public class LightSensorAgent extends Agent{
     class MyBehaviour extends TickerBehaviour{
         private boolean finished = false;
         private int brightness;
-        private int rangeBrightnes = 10;
+        private int rangeBrightnes = 5;
         public MyBehaviour(Agent a, int t){
             super(a,t);
         }
         protected void onTick() {           
             brightness = randomInRange(Home.getInstance().getBrightness()-rangeBrightnes, Home.getInstance().getBrightness()+rangeBrightnes);
-                
+            Home.getInstance().setBrightness(brightness);
             // Message to controller
             ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
