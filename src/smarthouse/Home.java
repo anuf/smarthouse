@@ -18,6 +18,9 @@ public class Home {
     private int hBrightness = 80; // Home brightness
     private boolean hFireAlarm = false; // Fire alarm
     private boolean hAntiTheft = false; // anti-theft system
+    private boolean hDoorOpen = true; // Door state
+    private boolean hWindowOpen = true; // Windows state
+    private boolean hHomeEmpty = false; // Windows state
     
     protected Home() {
       // Exists only to defeat instantiation.
@@ -31,6 +34,7 @@ public class Home {
     
     }
     
+    /* Getters & setters*/
     public double getTemperature(){
         return hTemperature;
     }
@@ -45,5 +49,29 @@ public class Home {
     
     public void setConfortTemperature(double pTemperature){
         confortTemperature = pTemperature;
+    }
+    
+    public boolean getDoorOpen(){
+        return hDoorOpen;
+    }
+    
+    public void setDoorOpen(boolean pOpen){
+        hDoorOpen = pOpen;
+    }
+    
+    public boolean getWindowOpen(){
+        return hWindowOpen;
+    }
+    
+    public void setWindowOpen(boolean pOpen){
+        hWindowOpen = pOpen;
+    }
+    
+    public boolean getHomeEmpty(){
+        return hHomeEmpty;
+    }
+    
+    public void setHomeEmpty(boolean pEmpty){
+        hHomeEmpty = pEmpty;
     }
 }

@@ -31,8 +31,11 @@ public class ControllerAgent extends Agent{
                         msg2.addReceiver(new AID("actorTemperatura",AID.ISLOCALNAME));
                         msg2.setContent(msg.getContent());
                         myAgent.send(msg2);
+                    }else if(msg.getSender().getLocalName().equals("actorIntruder")){
+                        System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
                     }else{
                         System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                        System.out.println( " MSG: " +msg.getContent());
                     }
                 }
                 block();

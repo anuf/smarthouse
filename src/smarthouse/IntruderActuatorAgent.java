@@ -5,17 +5,37 @@
  */
 package smarthouse;
 
+import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
 /**
  *
  * @author Francisco Manuel Castro Payán
  * @author Adolfo Núñez Fernández 
  */
 public class IntruderActuatorAgent extends Agent{
-   protected void setup() {
-  	System.out.println("I am a "+getLocalName());
-  	
-  	// Make this agent terminate
-  	doDelete();
-  } 
+    private String text = "";
+    protected void setup(){
+    
+        System.out.println("Agent "+getLocalName()+" started.");
+        addBehaviour(new CyclicBehaviour(this){
+            public void action(){
+                ACLMessage msg= receive();
+                if (msg!=null){
+                    System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                    text = "Police has been notice";
+                    System.out.println(text);
+                    
+                    // Message to controller
+                    ACLMessage msg2controller=new ACLMessage(ACLMessage.INFORM);
+                    msg2controller.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+                    msg2controller.setContent(text);
+                    myAgent.send(msg2controller);
+                    
+                }
+                block();
+            }
+        });
+    }
 }
