@@ -42,6 +42,7 @@ public class LightSensorAgent extends Agent{
             // Message to controller
             ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+            msg.addReceiver(new AID("bd",AID.ISLOCALNAME));
             msg.setContent(Integer.toString(brightness));
             myAgent.send(msg);
         }
