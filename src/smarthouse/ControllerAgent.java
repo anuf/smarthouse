@@ -24,15 +24,28 @@ public class ControllerAgent extends Agent{
                 ACLMessage msg= receive();
                 if (msg!=null){
                     if(msg.getSender().getLocalName().equals("termometro")){
-                        System.out.println( " * " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
-                        //Home.getInstance().setTemperature(Double.valueOf(msg.getContent()));
-                        // Message to actorTemperatura
-                        ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
-                        msg2.addReceiver(new AID("actorTemperatura",AID.ISLOCALNAME));
-                        msg2.setContent(msg.getContent());
-                        myAgent.send(msg2);
+                        System.out.println( " * " +myAgent.getLocalName() + 
+                                " <- message received from: " +msg.getSender().getLocalName() +
+                                ". Current temperature: " + msg.getContent());
+                        // Check temperature and decide.
+                        double temp = Double.valueOf(msg.getContent());
+                        double confortTemp = Home.getInstance().getConfortTemperature();
+                        
+                        if (temp != confortTemp) {
+                            // Message to actorTemperatura
+                            ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+                            msg2.addReceiver(new AID("actorTemperatura",AID.ISLOCALNAME));
+                            if (temp > confortTemp) {
+                                msg2.setContent("-0.5");
+                            } else if (temp < confortTemp) {
+                                msg2.setContent("0.5");
+                            }
+                            myAgent.send(msg2);
+                        }
+
                     }else if(msg.getSender().getLocalName().equals("actorIntruder")){
                         System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                        System.out.println( " MSG: " +msg.getContent());
                     }else{
                         System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
                         System.out.println( " MSG: " +msg.getContent());

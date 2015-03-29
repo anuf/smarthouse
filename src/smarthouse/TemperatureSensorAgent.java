@@ -42,18 +42,7 @@ public class TemperatureSensorAgent extends Agent{
             super(a,t);
         }
         protected void onTick() {           
-            
             temp = randomInRange(Home.getInstance().getTemperature()-rangeTemp, Home.getInstance().getTemperature()+rangeTemp);
-                
-            /*
-                if (temp < 15){
-                    System.out.println("It is getting cold:  "+Double.toString(temp)+ " degrees");
-                }else if(temp > 25){
-                    System.out.println("It is getting hot:  "+Double.toString(temp)+ " degrees");
-                }else{
-                    System.out.println("It is warm:  "+Double.toString(temp)+ " degrees");
-                }
-            */
                 
             // Message to controller
             ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
@@ -67,6 +56,6 @@ public class TemperatureSensorAgent extends Agent{
      */
     private double randomInRange(double min, double max){
         double range = (max - min) + 1;     
-        return (Math.random() * range) + min;
+        return (Math.round(Math.random() * range) + min + 0.5);
     }    
 }

@@ -23,8 +23,14 @@ public class TemperatureActuatorAgent extends Agent{
                 ACLMessage msg= receive();
                 if (msg!=null){
                     System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
-                    System.out.println( "Setting temperature: " +Math.round(Double.valueOf(msg.getContent())));
-                    Home.getInstance().setTemperature(Math.round(Double.valueOf(msg.getContent())));
+                    double increment = Double.valueOf(msg.getContent());
+                    double newTemp = Home.getInstance().getTemperature() + increment;
+                    //System.out.println( "Setting temperature: " + newTemp);
+                    if (increment > 0)
+                        System.out.println("Increasing temperature");
+                    else
+                        System.out.println("Decreasing temperature");
+                    Home.getInstance().setTemperature(newTemp);
                 }
                 block();
             }
