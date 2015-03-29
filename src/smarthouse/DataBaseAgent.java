@@ -46,7 +46,7 @@ public class DataBaseAgent extends Agent {
                             temperatureFile = new FileWriter(temperaturePath, true);
                             temperatureFile.write(line + msg.getContent() + "\n");
                             temperatureFile.close();
-                        } else if (msg.getSender().getLocalName().equals("luz")) {
+                        } else if (msg.getSender().getLocalName().equals("sensorLuz")) {
                             lightFile = new FileWriter(lightPath, true);
                             lightFile.write(line + msg.getContent() + "\n");
                             lightFile.close();
