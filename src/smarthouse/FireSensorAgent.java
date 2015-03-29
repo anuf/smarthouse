@@ -38,6 +38,7 @@ public class FireSensorAgent extends Agent{
         }
         protected void onTick() {
             // Simulate the fire
+            alert = false;
             if(Math.random() < 0.05){ // Fire is detected
                 alert = true;
             }
