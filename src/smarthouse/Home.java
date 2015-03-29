@@ -20,7 +20,7 @@ public class Home {
     private boolean hAntiTheft = false; // anti-theft system
     private boolean hDoorOpen = true; // Door state
     private boolean hWindowOpen = true; // Windows state
-    private boolean hHomeEmpty = false; // Windows state
+    private boolean hHomeEmpty = false; // Occupacy state
     
     protected Home() {
       // Exists only to defeat instantiation.

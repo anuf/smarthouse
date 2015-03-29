@@ -43,10 +43,10 @@ public class ControllerAgent extends Agent{
                             myAgent.send(msg2);
                         }
 
-                    }else if(msg.getSender().getLocalName().equals("actorIntruder")){
-                        System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
-                        System.out.println( " MSG: " +msg.getContent());
+                    }else if(msg.getSender().getLocalName().equals("sensorLuz")){
+                        // TODO
                     }else{
+                        // Messages have gone directly to actuators so they resend a notification 
                         System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
                         System.out.println( " MSG: " +msg.getContent());
                     }
