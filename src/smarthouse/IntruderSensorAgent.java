@@ -38,6 +38,7 @@ public class IntruderSensorAgent extends Agent{
             super(a,t);
         }
         protected void onTick() {
+            alert = false;
             // Simulate the door
             if(Math.random() < 0.3){ // Door is closed
                 Home.getInstance().setDoorOpen(false);
