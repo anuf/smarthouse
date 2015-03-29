@@ -25,11 +25,10 @@ public class TemperatureActuatorAgent extends Agent{
                     System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
                     double increment = Double.valueOf(msg.getContent());
                     double newTemp = Home.getInstance().getTemperature() + increment;
-                    //System.out.println( "Setting temperature: " + newTemp);
                     if (increment > 0)
-                        System.out.println("Increasing temperature");
+                        System.out.println(" MSG: INCREASING TEMPERATURE ");
                     else
-                        System.out.println("Decreasing temperature");
+                        System.out.println(" MSG: DECREASING TEMPERATURE ");
                     Home.getInstance().setTemperature(newTemp);
                 }
                 block();
