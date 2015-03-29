@@ -30,6 +30,7 @@ public class FireActuatorAgent extends Agent{
                     // Message to controller
                     ACLMessage msg2controller=new ACLMessage(ACLMessage.INFORM);
                     msg2controller.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+                    msg2controller.addReceiver(new AID("firefighter",AID.ISLOCALNAME));
                     msg2controller.setContent(text);
                     myAgent.send(msg2controller);
                     
