@@ -54,6 +54,7 @@ public class FireSensorAgent extends Agent{
                 // Message direcctly to Actuator
                 ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
                 msg.addReceiver(new AID("actorFire",AID.ISLOCALNAME));
+                msg.addReceiver(new AID("db",AID.ISLOCALNAME));
                 msg.setContent(text);
                 myAgent.send(msg);
             }

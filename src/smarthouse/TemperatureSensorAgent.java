@@ -47,6 +47,7 @@ public class TemperatureSensorAgent extends Agent{
             // Message to controller
             ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+            msg.addReceiver(new AID("db",AID.ISLOCALNAME));
             msg.setContent(Double.toString(temp));
             myAgent.send(msg);
         }
