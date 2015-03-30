@@ -13,8 +13,7 @@ import jade.lang.acl.ACLMessage;
  * @author Francisco Manuel Castro Payán
  * @author Adolfo Núñez Fernández 
  */
-public class TemperatureActuatorAgent extends Agent{
-    
+public class FirefighterAgent extends Agent{
     protected void setup(){
     
         System.out.println("Agent "+getLocalName()+" started.");
@@ -22,14 +21,8 @@ public class TemperatureActuatorAgent extends Agent{
             public void action(){
                 ACLMessage msg= receive();
                 if (msg!=null){
-                    System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
-                    double increment = Double.valueOf(msg.getContent());
-                    double newTemp = Home.getInstance().getTemperature() + increment;
-                    if (increment > 0)
-                        System.out.println(" MSG: INCREASING TEMPERATURE ");
-                    else
-                        System.out.println(" MSG: DECREASING TEMPERATURE ");
-                    Home.getInstance().setTemperature(newTemp);
+                    System.out.println( " - " + myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                    System.out.println(" MSG: Firefighters arriving.");
                 }
                 block();
             }

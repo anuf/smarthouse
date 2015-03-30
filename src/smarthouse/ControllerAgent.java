@@ -9,6 +9,7 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 /**
  *
@@ -32,17 +33,57 @@ public class ControllerAgent extends Agent{
                         double confortTemp = Home.getInstance().getConfortTemperature();
                         
                         if (temp != confortTemp) {
-                            // Message to actorTemperatura
+                            // Message to controller
                             ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
-                            msg2.addReceiver(new AID("actorTemperatura",AID.ISLOCALNAME));
-                            if (temp > confortTemp) {
-                                msg2.setContent("-0.5");
-                            } else if (temp < confortTemp) {
-                                msg2.setContent("0.5");
-                            }
+                            msg2.addReceiver(new AID("db",AID.ISLOCALNAME));
+                            msg2.setContent("Foo");
                             myAgent.send(msg2);
-                        }
+                            
+                            // Receive repply.
+                            MessageTemplate template = MessageTemplate.MatchSender(new AID("db",AID.ISLOCALNAME));
+                            ACLMessage msgList = blockingReceive(template);
+                            String lastTemps = msgList.getContent();
+                            lastTemps = lastTemps.substring(1, lastTemps.length() - 2);
+                            String [] lastValues = lastTemps.split(",");
 
+                            // Message to actorTemperatura
+                            ACLMessage msg3 = new ACLMessage(ACLMessage.INFORM);
+                            msg3.addReceiver(new AID("actorTemperatura",AID.ISLOCALNAME));
+                            if (temp > confortTemp) {
+                                int test = 0;
+                                if(lastValues.length == 3) {
+                                    for (int i=0;i<lastValues.length;i++) {
+                                        if (Double.valueOf(lastValues[i]) > confortTemp) {
+                                            test++;
+                                        }
+                                    }
+                                }
+
+                                if (test == 3) {
+                                    msg3.setContent("-1");
+                                    System.out.println(" MSG: FAST DECREASING");
+                                } else {
+                                    msg3.setContent("-0.5");
+                                }
+                            } else if (temp < confortTemp) {
+                                int test = 0;
+                                if(lastValues.length == 3) {
+                                    for (int i=0;i<lastValues.length;i++) {
+                                        if (Double.valueOf(lastValues[i]) < confortTemp) {
+                                            test++;
+                                        }
+                                    }
+                                }
+
+                                if (test == 3) {
+                                    msg3.setContent("1");
+                                    System.out.println(" MSG: FAST INCREASING");
+                                } else {
+                                    msg3.setContent("0.5");
+                                }
+                            }
+                            myAgent.send(msg3);
+                        }
                     }else if(msg.getSender().getLocalName().equals("sensorLuz")){
                         System.out.println( " * " +myAgent.getLocalName() + 
                                 " <- message received from: " +msg.getSender().getLocalName() +
