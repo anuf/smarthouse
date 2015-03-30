@@ -15,8 +15,8 @@ public class Home {
     private static Home instance = null;
     private double hTemperature = 17.0; // Home temperature
     private double confortTemperature = 20.0; // Confort temperature
-    private int MAX_BRIGHTNESS = 90;
-    private int MIN_BRIGHTNESS = 30;
+    private final int MAX_BRIGHTNESS = 90;
+    private final int MIN_BRIGHTNESS = 30;
     private int hBrightness = 60; // Home brightness
     private int confortBrightness = 55; // Confort Brightness
     private boolean hLightsAreOn = false;
