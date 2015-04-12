@@ -23,26 +23,28 @@ public class IntruderActuatorAgent extends Agent{
         addBehaviour(new CyclicBehaviour(this){
             public void action(){
                 ACLMessage msg= receive();
-                if (msg!=null && nMessages == 1){
-                    if (Double.parseDouble(msg.getContent()) >= 0.5) {
-                        System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
-                        text = "Police has been notice";
-                        System.out.println(text);
+                if (msg!=null) {
+                    if (nMessages == 1) {
+                        if (Double.parseDouble(msg.getContent()) >= 0.5) {
+                            System.out.println( " - " +myAgent.getLocalName() + " <- message received from: " +msg.getSender().getLocalName());
+                            text = "POLICE NOTIFIED";
+                            System.out.println(text);
 
-                        // Message to controller
-                        ACLMessage msg2controller=new ACLMessage(ACLMessage.INFORM);
-                        msg2controller.addReceiver(new AID("controlador",AID.ISLOCALNAME));
-                        msg2controller.addReceiver(new AID("police",AID.ISLOCALNAME));
-                        msg2controller.setContent(text);
-                        myAgent.send(msg2controller); 
-                        nMessages = 0;
-                    }else {
-                        System.out.println("False alarm.");
-                        nMessages = 0;
+                            // Message to controller
+                            ACLMessage msg2controller=new ACLMessage(ACLMessage.INFORM);
+                            msg2controller.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+                            msg2controller.addReceiver(new AID("police",AID.ISLOCALNAME));
+                            msg2controller.setContent(text);
+                            myAgent.send(msg2controller); 
+                            nMessages = 0;
+                        }else {
+                            System.out.println("MSG: FALSE ALARM.");
+                            nMessages = 0;
+                        }
+                    } else {
+                        System.out.println("MSG: RECEIVED FIRST DETECTION. WAITING CONFIRMATION.");
+                        nMessages++;
                     }
-                }else {
-                    System.out.println("Received first detection. Waiting confirmation.");
-                    nMessages++;
                 }
                 block();
             }

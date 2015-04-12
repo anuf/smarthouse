@@ -90,11 +90,6 @@ public class IntruderSensorAgent extends Agent{
                 msg2.setContent(Double.toString(Math.random()));
                 myAgent.send(msg2);
             }
-            // Message to controller (STATUS TO BE LOGGED)
-            //ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
-            //msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
-            //msg.setContent(text);
-            //myAgent.send(msg);
         }
     }   
 }
