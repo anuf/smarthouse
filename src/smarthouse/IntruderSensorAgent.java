@@ -79,14 +79,22 @@ public class IntruderSensorAgent extends Agent{
                 ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
                 msg.addReceiver(new AID("actorIntruder",AID.ISLOCALNAME));
                 msg.addReceiver(new AID("db",AID.ISLOCALNAME));
+                msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
                 msg.setContent(text);
                 myAgent.send(msg);
+                
+                // Send confirmation.
+                // Message direcctly to Actuator
+                ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+                msg2.addReceiver(new AID("actorIntruder",AID.ISLOCALNAME));
+                msg2.setContent(Double.toString(Math.random()));
+                myAgent.send(msg2);
             }
             // Message to controller (STATUS TO BE LOGGED)
-            ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
-            msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
-            msg.setContent(text);
-            myAgent.send(msg);
+            //ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
+            //msg.addReceiver(new AID("controlador",AID.ISLOCALNAME));
+            //msg.setContent(text);
+            //myAgent.send(msg);
         }
     }   
 }
